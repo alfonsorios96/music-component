@@ -1,0 +1,68 @@
+<link rel="import" href="../polymer/polymer-element.html">
+<link rel="import" href="../paper-input/paper-input.html">
+<link rel="import" href="../iron-ajax/iron-ajax.html">
+
+<dom-module id="music-component">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <iron-ajax
+     id="musicRequest"
+     auto
+     method="get"
+     url="http://localhost:3000/track/1234"
+     handle-as="json"
+     on-response="musicResponse"
+     on-error="musicError"
+     headers="{'Access-Control-Allow-Origin:*','Access-Control-Allow-Credentials:true'}"
+    >     
+    </iron-ajax>  
+   <paper-input label="Search for a song"></paper-input>
+  </template>
+
+  <script>
+    /**
+     * `music-component`
+     * 
+     * @customElement
+     * @polymer
+     * @demo demo/index.html
+     */
+    class MusicComponent extends Polymer.Element {
+      static get is() { return 'music-component'; }
+      static get properties() {
+        return {
+          
+        };
+      }
+
+      ready(){
+        super.ready();
+        
+      }
+
+      getMusic(){
+        fetch("https://api.deezer.com/album/302127?note=5&request_method=GET").then(response=>response.json()).then(data=>{
+          console.log(data);
+        }).catch((error)=>{
+          console.log(error);
+        });
+      }
+
+      musicResponse(event){
+        console.log(event.detail.response);
+        
+      }
+
+      musicError(event){
+        console.log(event.detail.error);
+      }
+
+    }
+
+    window.customElements.define(MusicComponent.is, MusicComponent);
+  </script>
+</dom-module>
