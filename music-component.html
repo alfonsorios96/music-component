@@ -39,7 +39,7 @@
 
     <div class="player-container">
       <music-search on-search-made="searchSong"></music-search>
-      <music-list on-song-selected="selectSong" filter-argument="[[searchArgument]]" hidden-list="[[hiddenList]]"></music-list>
+      <music-list on-song-selected="selectSong" filter-argument="[[searchArgument]]" hidden-list="[[hiddenList]]" request-url="[[listRequestUrl]]"></music-list>
       <p class="song-name">[[songName]]</p>
       <div class="slider-container">
         <p>[[transcurredTime]]</p>
@@ -114,6 +114,14 @@
           transcurredTime:{
             type:String,
             value:""
+          },
+          listRequestUrl:{
+            type:String,
+            value:"https://music-server-jansolote.herokuapp.com/tracks"
+          },
+          songUrl:{
+            type:String,
+            value:"https://music-server-jansolote.herokuapp.com/track/"
           }
         };
       }
@@ -199,7 +207,7 @@
       }
 
       selectSong(event) {
-        this.set("songUrl", `http://localhost:8000/track/${event.detail}`)
+        this.set("songUrl", `${this.songUrl}${event.detail}`)
         this.set("songName",event.detail);
         const musicPlayer = this.shadowRoot.querySelector("#musicPlayer")
         musicPlayer.load();
