@@ -29,6 +29,7 @@ $ bower install
 | invisibleControls |      false      |               determines the visibility of the controls               |
 
 ##Events
+
 | song-playing     | only fires when the song is playing     |
 |------------------|-----------------------------------------|
 | song-paused      | only fires once the song is paused      |
