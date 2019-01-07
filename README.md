@@ -28,7 +28,7 @@ $ bower install
 |      trackUrl     |        ""       | specific song request direction (combination of songUrl and songName) |
 | invisibleControls |      false      |               determines the visibility of the controls               |
 
-##Events
+## Events
 
 | song-playing     | only fires when the song is playing     |
 |------------------|-----------------------------------------|
