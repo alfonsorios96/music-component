@@ -25,6 +25,12 @@
       </template>
     </test-fixture>
 
+    <test-fixture id="volume-test">
+       <template>
+       <music-component volume="0.50"></music-component>
+      </template>
+    </test-fixture>
+
     <script>
        suite("music-plays",()=>{
          test("song is playing",(done)=>{
@@ -55,6 +61,28 @@
            });
            musicComponent.pauseSong();
          });
+       });
+
+       suite("volume-changed",()=>{
+          test("volume has increased",(done)=>{
+            	let musicComponent=fixture("volume-test")
+              musicComponent.addEventListener("volume-changed",(event)=>{
+                  assert.equal(musicComponent.volume,0.60);
+                  done();
+              });
+              musicComponent.increaseVolume();
+          });
+          
+          test("volume has decreased",(done)=>{
+            	let musicComponent=fixture("volume-test")
+              musicComponent.addEventListener("volume-changed",(event)=>{
+                  assert.equal(musicComponent.volume,0.40);
+                  done();
+              });
+              musicComponent.decreaseVolume();
+          });
+
+
        });
     </script>
 

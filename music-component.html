@@ -5,6 +5,7 @@
 <link rel="import" href="../paper-slider/paper-slider.html">
 <link rel="import" href="../music-search/music-search.html">
 <link rel="import" href="../music-list/music-list.html">
+
 <dom-module id="music-component">
   <template>
     <style>
@@ -36,7 +37,6 @@
     <audio id="musicPlayer">
       <source src="[[trackUrl]]" type="audio/mp3" codecs="mp3">
     </audio>
-
     <div class="player-container">
       <music-search on-search-made="searchSong"></music-search>
       <music-list on-song-selected="selectSong" filter-argument="[[searchArgument]]" hidden-list="[[hiddenList]]"

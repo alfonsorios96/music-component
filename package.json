@@ -1,0 +1,33 @@
+{
+    "name": "music-component",
+    "version": "1.0.0",
+    "description": "mini web music player",
+    "main": "index.js",
+    "directories": {
+      "test": "test"
+    },
+    "scripts": {
+      "test": "./node_modules/.bin/wct",
+      "coverage": "open coverage/lcov-report/index.html"
+    },
+    "repository": {
+      "type": "git",
+      "url": "https://github.com/jusolete/music-component"
+    },
+    "keywords": [
+      "polymer2",
+      "element",
+       "music",
+       "player"
+    ],
+    "author": "@jusolete",
+    "license": "MIT",
+    "bugs": {
+      "url": "https://github.com/jusolete/music-component/issues"
+    },
+    "homepage": "https://github.com/jusolete/music-component#readme",
+    "devDependencies": {
+      "web-component-tester": "git+https://github.com/t2ym/web-component-tester.git#wct6-plugin",
+      "web-component-tester-istanbul": "git+https://github.com/t2ym/web-component-tester-istanbul.git#0.10.1-wct6.8"
+    }
+  }
