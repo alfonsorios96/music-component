@@ -5,6 +5,7 @@
 <link rel="import" href="../paper-slider/paper-slider.html">
 <link rel="import" href="../music-search/music-search.html">
 <link rel="import" href="../music-list/music-list.html">
+
 <dom-module id="music-component">
   <template>
     <style>
@@ -34,19 +35,19 @@
       }
     </style>
     <audio id="musicPlayer">
-      <source src="[[songUrl]]" type="audio/mp3" codecs="mp3">
+      <source src="[[trackUrl]]" type="audio/mp3" codecs="mp3">
     </audio>
-
     <div class="player-container">
       <music-search on-search-made="searchSong"></music-search>
-      <music-list on-song-selected="selectSong" filter-argument="[[searchArgument]]" hidden-list="[[hiddenList]]"></music-list>
+      <music-list on-song-selected="selectSong" filter-argument="[[searchArgument]]" hidden-list="[[hiddenList]]"
+        request-url="[[listRequestUrl]]"></music-list>
       <p class="song-name">[[songName]]</p>
       <div class="slider-container">
         <p>[[transcurredTime]]</p>
-        <paper-slider min="0" value="[[songProgress]]" max="[[songDuration]]" on-dragging-changed="draggingChanged" step="0.1"
-        on-click="clickedSlider"></paper-slider>
+        <paper-slider min="0" value="[[songProgress]]" max="[[songDuration]]" on-dragging-changed="draggingChanged"
+          step="0.1" on-click="clickedSlider"></paper-slider>
       </div>
-   
+
       <div id="audioControls">
         <paper-button on-tap="decreaseVolume">-</paper-button>
         <template is="dom-if" if="[[!paused]]">
@@ -103,17 +104,29 @@
             type: String,
             value: ""
           },
-          hiddenList:{
-            type:Boolean, 
-            value:true
+          hiddenList: {
+            type: Boolean,
+            value: true
           },
-          songName:{
-            type:String,
-            value:""
+          songName: {
+            type: String,
+            value: ""
           },
-          transcurredTime:{
-            type:String,
-            value:""
+          transcurredTime: {
+            type: String,
+            value: ""
+          },
+          listRequestUrl: {
+            type: String,
+            value: "https://music-server-jansolote.herokuapp.com/tracks"
+          },
+          songUrl: {
+            type: String,
+            value: "https://music-server-jansolote.herokuapp.com/track/"
+          },
+          trackUrl: {
+            type: String,
+            value: ""
           }
         };
       }
@@ -121,11 +134,6 @@
       ready() {
         super.ready();
         this.isSongReady();
-        this.loadingProgress();
-      }
-
-      loadingProgress() {
-        const musicPlayer = this.shadowRoot.querySelector("#musicPlayer");
       }
 
       isSongReady() {
@@ -142,16 +150,14 @@
           this.set("songProgress", musicPlayer.currentTime);
 
         });
-
-
         let songObject = {
-          songUrl: this.songUrl,
-          currentTime: musicPlayer.currentTime
+          songUrl: this.trackUrl,
+          duration: this.songDuration
         }
         this.dispatchEvent(new CustomEvent("song-playing", {
           bubbles: false,
           composed: false,
-          detail: {}
+          detail: songObject
         }))
         this.set("paused", true);
       }
@@ -159,7 +165,7 @@
       pauseSong() {
         const musicPlayer = this.shadowRoot.querySelector("#musicPlayer");
         let songObject = {
-          songUrl: this.songUrl,
+          songUrl: this.trackUrl,
           currentTime: musicPlayer.currentTime
         }
 
@@ -173,15 +179,15 @@
         }))
       }
 
-      musicForward() {
-        let musicPlayer = this.shadowRoot.querySelector("#musicPlayer");
-
-      }
-
       clickedSlider(event) {
         let sliderValue = event.target.getAttribute("value")
         let musicPlayer = this.shadowRoot.querySelector("#musicPlayer");
         musicPlayer.currentTime = sliderValue;
+        this.dispatchEvent(new CustomEvent("slider-clicked", {
+          bubbles: false,
+          composed: false,
+          detail: sliderValue
+        }));
       }
 
       draggingChanged(event) {
@@ -196,42 +202,69 @@
         const musicPlayer = this.shadowRoot.querySelector("#musicPlayer");
         this.set("volume", event.detail.value);
         musicPlayer.volume = this.volume;
+        this.dispatchEvent(new CustomEvent("volume-changed", {
+          bubbles: false,
+          composed: false,
+          detail: this.volume
+        }))
       }
 
       selectSong(event) {
-        this.set("songUrl", `http://localhost:8000/track/${event.detail}`)
-        this.set("songName",event.detail);
-        const musicPlayer = this.shadowRoot.querySelector("#musicPlayer")
+        this.set("trackUrl", "");
+        this.set("trackUrl", `${this.songUrl}${event.detail}`);
+        this.set("songName", event.detail);
+        const musicPlayer = this.shadowRoot.querySelector("#musicPlayer");
         musicPlayer.load();
+        musicPlayer.addEventListener("loadedmetadata", (event) => {
+          this.set("songDuration", musicPlayer.duration)
+        });
         musicPlayer.play();
+        let songObject = {
+          songUrl: this.trackUrl,
+          duration: this.songDuration
+        }
+        this.dispatchEvent(new CustomEvent("song-playing", {
+          bubbles: false,
+          composed: false,
+          detail: songObject
+        }))
         musicPlayer.addEventListener("timeupdate", (event) => {
           this.set("songProgress", musicPlayer.currentTime);
         });
+
         this.set("songProgress", 0);
         this.set("paused", true);
       }
 
       searchSong(event) {
         this.set("searchArgument", event.detail);
-         if(this.searchArgument.length===0){
-          this.set("hiddenList",true);
-         }else{
-          this.set("hiddenList",false);
-         }
-        
+        if (this.searchArgument.length === 0) {
+          this.set("hiddenList", true);
+        } else {
+          this.set("hiddenList", false);
+        }
+
       }
 
       increaseVolume() {
         if (this.volume <= 1) {
           this.set("volume", this.volume + 0.10);
+          this.dispatchEvent(new CustomEvent("volume-changed", {
+            bubbles: false,
+            composed: false,
+            detail: this.volume
+          }))
         }
-
-
       }
 
       decreaseVolume() {
         if (this.volume >= 0) {
           this.set("volume", this.volume - 0.10);
+          this.dispatchEvent(new CustomEvent("volume-changed", {
+            bubbles: false,
+            composed: false,
+            detail: this.volume
+          }))
         }
 
       }
