@@ -14,30 +14,55 @@
       }
       #audioControls{
         width:100%;
-        border: 1px solid black;
-        height: 70px;
+        height: 40px;
         display: flex;
+        border-radius: 5px;
       }
       
       paper-button{
         text-align: center;
         width: 33%;
+        --paper-button:{
+          background-color:#1C1426;
+          color:white;
+        }
+        --paper-button-ink-color:red;
       }
       .player-container{
         width: 300px;
         margin: 0 auto;
       }
+      .button-container{
+        width: 300px;
+        margin: 0 auto;
+      }
       paper-slider{
         width: 100%;
+        --paper-slider-active-color:#2C4C59;
+        --paper-slider-knob-color:#2C4C59;
       }
       paper-slider#volumeControl{
         width: 33%;
+        --paper-slider-active-color:#2C4C59;
+        --paper-slider-knob-color:#2C4C59;
+      }
+      #show-ctrl{
+        width: 100%;
+        color: white;
+        background-color:#2C4C59;
+        border:none;
+        padding:7px;
+        border-radius: 5px;
+        cursor:pointer;
       }
     </style>
     <audio id="musicPlayer">
       <source src="[[trackUrl]]" type="audio/mp3" codecs="mp3">
     </audio>
-    <div class="player-container">
+    <div class="button-container">
+        <button id="show-ctrl" on-click="showControls">show controls</button>
+    </div>
+    <div class="player-container" hidden$="[[invisibleControls]]">
       <music-search on-search-made="searchSong"></music-search>
       <music-list on-song-selected="selectSong" filter-argument="[[searchArgument]]" hidden-list="[[hiddenList]]"
         request-url="[[listRequestUrl]]"></music-list>
@@ -127,6 +152,10 @@
           trackUrl: {
             type: String,
             value: ""
+          },
+          invisibleControls:{
+            type:Boolean,
+            value:false
           }
         };
       }
@@ -267,6 +296,10 @@
           }))
         }
 
+      }
+
+      showControls(){
+        this.set("invisibleControls",!this.invisibleControls);
       }
 
     }
