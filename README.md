@@ -12,7 +12,7 @@ $ bower install
 ```
 
 ## Properties
-```javascript
+
 |     Properties    | value (default) |                              description                              |
 |:-----------------:|-----------------|:---------------------------------------------------------------------:|
 |       paused      |      false      |                defines wether the song is paused or not               |
@@ -27,7 +27,7 @@ $ bower install
 |   listRequestUrl  |        ""       |         url of the songs list (used with song-list component)         |
 |      trackUrl     |        ""       | specific song request direction (combination of songUrl and songName) |
 | invisibleControls |      false      |               determines the visibility of the controls               |
-```
+
 
 
 ## Install the Polymer-CLI
