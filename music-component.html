@@ -68,7 +68,6 @@
         request-url="[[listRequestUrl]]"></music-list>
       <p class="song-name">[[songName]]</p>
       <div class="slider-container">
-        <p>[[transcurredTime]]</p>
         <paper-slider min="0" value="[[songProgress]]" max="[[songDuration]]" on-dragging-changed="draggingChanged"
           step="0.1" on-click="clickedSlider"></paper-slider>
       </div>
@@ -105,10 +104,6 @@
             type: Boolean,
             value: false
           },
-          songUrl: {
-            type: String,
-            value: ""
-          },
           songDuration: {
             type: Number,
             value: 0
@@ -134,10 +129,6 @@
             value: true
           },
           songName: {
-            type: String,
-            value: ""
-          },
-          transcurredTime: {
             type: String,
             value: ""
           },
