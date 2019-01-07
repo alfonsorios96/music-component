@@ -215,6 +215,11 @@
         if (isDragging === false) {
           const musicPlayer = this.shadowRoot.querySelector("#musicPlayer");
           musicPlayer.currentTime = event.target.getAttribute("value");
+          this.dispatchEvent(new CustomEvent("dragging-changed",{
+            composed:false,
+            bubbles:false,
+            detail:musicPlayer.currentTime
+          }))
         }
       }
 

@@ -28,7 +28,13 @@ $ bower install
 |      trackUrl     |        ""       | specific song request direction (combination of songUrl and songName) |
 | invisibleControls |      false      |               determines the visibility of the controls               |
 
-
+##Events
+| song-playing     | only fires when the song is playing     |
+|------------------|-----------------------------------------|
+| song-paused      | only fires once the song is paused      |
+| slider-clicked   | fires when the time slider is clicked   |
+| dragging-changed | fires once the slider finishes dragging |
+| volume-changed   | fires when the volume is changed        |
 
 ## Install the Polymer-CLI
 
