@@ -28,7 +28,7 @@
           color:white;
           @apply --music-controls-buttons
         }
-        --paper-button-ink-color:var(--music-control-button-ink);
+        --paper-button-ink-color:var(--music-control-button-ink,blue);
       }
       .player-container{
         @apply --player-container-style;
@@ -62,6 +62,17 @@
         @apply --music-controls-show-button
       }
     </style>
+    <!--
+      `Music-Player` is a web mp3 player. as soon as the user provides a server from wich the component will get the song list and they'll be avaliable for playing.
+      Example:
+      <music-component list-request-url="https://music-server-jansolote.herokuapp.com/tracks" song-url="https://music-server-jansolote.herokuapp.com/track/"></music-component>
+      ### Properties
+      ### Events
+      ### Styling
+      @customElement
+      @polymer
+      @demo demo/index.html
+     -->
     <audio id="musicPlayer">
       <source src="[[trackUrl]]" type="audio/mp3" codecs="mp3">
     </audio>
@@ -95,13 +106,7 @@
   </template>
 
   <script>
-    /**
-     * `music-component`
-     * 
-     * @customElement
-     * @polymer
-     * @demo demo/index.html
-     */
+    
     class MusicComponent extends Polymer.Element {
       static get is() {
         return 'music-component';
@@ -156,9 +161,9 @@
             type: Boolean,
             value: false
           },
-          invisibleControlsButton:{
-            type:Boolean,
-            value:false
+          invisibleControlsButton: {
+            type: Boolean,
+            value: false
           }
         };
       }
