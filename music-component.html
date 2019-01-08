@@ -11,6 +11,7 @@
     <style>
       :host {
         display: block;
+        @apply --music-player-component;
       }
       #audioControls{
         width:100%;
@@ -19,32 +20,35 @@
         border-radius: 5px;
       }
       
-      paper-button{
+      paper-button.controls{
         text-align: center;
         width: 33%;
         --paper-button:{
           background-color:#1C1426;
           color:white;
+          @apply --music-controls-buttons
         }
-        --paper-button-ink-color:red;
+        --paper-button-ink-color:var(--music-control-button-ink);
       }
       .player-container{
+        @apply --player-container-style;
         width: 300px;
         margin: 0 auto;
       }
       .button-container{
+        @apply --player-button-container-style;
         width: 300px;
         margin: 0 auto;
       }
       paper-slider{
         width: 100%;
-        --paper-slider-active-color:#2C4C59;
-        --paper-slider-knob-color:#2C4C59;
+        --paper-slider-active-color:var(--music-slider-color);
+        --paper-slider-knob-color:var(--music-slider-knob-color);
       }
       paper-slider#volumeControl{
         width: 33%;
-        --paper-slider-active-color:#2C4C59;
-        --paper-slider-knob-color:#2C4C59;
+        --paper-slider-active-color:var(--music-slider-color);
+        --paper-slider-knob-color:var(--music-slider-knob-color);
       }
       #show-ctrl{
         width: 100%;
@@ -54,33 +58,37 @@
         padding:7px;
         border-radius: 5px;
         cursor:pointer;
+        margin-bottom: 10px;
+        @apply --music-controls-show-button
       }
     </style>
     <audio id="musicPlayer">
       <source src="[[trackUrl]]" type="audio/mp3" codecs="mp3">
     </audio>
-    <div class="button-container">
-        <button id="show-ctrl" on-click="showControls">show controls</button>
+    <div class="button-container" hidden$="[[invisibleControlsButton]]">
+      <button id="show-ctrl" on-click="showControls">show controls</button>
     </div>
-    <div class="player-container" hidden$="[[invisibleControls]]">
-      <music-search on-search-made="searchSong"></music-search>
-      <music-list on-song-selected="selectSong" filter-argument="[[searchArgument]]" hidden-list="[[hiddenList]]"
-        request-url="[[listRequestUrl]]"></music-list>
-      <p class="song-name">[[songName]]</p>
-      <div class="slider-container">
-        <paper-slider min="0" value="[[songProgress]]" max="[[songDuration]]" on-dragging-changed="draggingChanged"
-          step="0.1" on-click="clickedSlider"></paper-slider>
-      </div>
+    <div class="player-container">
 
+      <div class="search-container" hidden$="[[invisibleControls]]">
+        <music-search on-search-made="searchSong"></music-search>
+        <music-list on-song-selected="selectSong" filter-argument="[[searchArgument]]" hidden-list="[[hiddenList]]"
+          request-url="[[listRequestUrl]]"></music-list>
+        <p class="song-name">[[songName]]</p>
+        <div class="slider-container">
+          <paper-slider min="0" value="[[songProgress]]" max="[[songDuration]]" on-dragging-changed="draggingChanged"
+            step="0.1" on-click="clickedSlider"></paper-slider>
+        </div>
+      </div>
       <div id="audioControls">
-        <paper-button on-tap="decreaseVolume">-</paper-button>
+        <paper-button class="controls" on-tap="decreaseVolume">-</paper-button>
         <template is="dom-if" if="[[!paused]]">
-          <paper-button on-tap="playSong">play</paper-button>
+          <paper-button class="controls" on-tap="playSong">play</paper-button>
         </template>
         <template is="dom-if" if="[[paused]]">
-          <paper-button on-tap="pauseSong">pause</paper-button>
+          <paper-button class="controls" on-tap="pauseSong">pause</paper-button>
         </template>
-        <paper-button on-tap="increaseVolume">+</paper-button>
+        <paper-button class="controls" on-tap="increaseVolume">+</paper-button>
       </div>
       <paper-slider min="0" max="1" value="{{volume}}" step="0.01" id="volumeControl" on-value-changed="volumeChanged"></paper-slider>
     </div>
@@ -144,7 +152,11 @@
             type: String,
             value: ""
           },
-          invisibleControls:{
+          invisibleControls: {
+            type: Boolean,
+            value: false
+          },
+          invisibleControlsButton:{
             type:Boolean,
             value:false
           }
@@ -215,10 +227,10 @@
         if (isDragging === false) {
           const musicPlayer = this.shadowRoot.querySelector("#musicPlayer");
           musicPlayer.currentTime = event.target.getAttribute("value");
-          this.dispatchEvent(new CustomEvent("dragging-changed",{
-            composed:false,
-            bubbles:false,
-            detail:musicPlayer.currentTime
+          this.dispatchEvent(new CustomEvent("dragging-changed", {
+            composed: false,
+            bubbles: false,
+            detail: musicPlayer.currentTime
           }))
         }
       }
@@ -294,8 +306,8 @@
 
       }
 
-      showControls(){
-        this.set("invisibleControls",!this.invisibleControls);
+      showControls() {
+        this.set("invisibleControls", !this.invisibleControls);
       }
 
     }

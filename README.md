@@ -37,6 +37,19 @@ $ bower install
 | dragging-changed | fires once the slider finishes dragging |
 | volume-changed   | fires when the volume is changed        |
 
+## Styling
+
+
+|          Variable name          |   Type   |                   Used                   |
+|:-------------------------------:|:--------:|:----------------------------------------:|
+|     --music-player-component    |   Mixin  |     host styling of the music player     |
+|     --music-controls-buttons    |   Mixin  |          Control buttons styling         |
+|    --music-control-button-ink   | Variable |  Effect of control buttons once clicked  |
+|     --player-container-style    |   Mixin  |   styling of the music player container  |
+| --player-button-container-style |   Mixin  | Stilyng of the control buttons container |
+|       --music-slider-color      | Variable | color of the progress and volume sliders |
+|    --music-slider-knob-color    | Variable |         color of the sliders knob        |
+
 ## Install the Polymer-CLI
 
 First, make sure you have the [Polymer CLI](https://www.npmjs.com/package/polymer-cli) installed. Then run `polymer serve` to serve your element locally.
