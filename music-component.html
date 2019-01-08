@@ -41,13 +41,13 @@
       }
       paper-slider{
         width: 100%;
-        --paper-slider-active-color:var(--music-slider-color);
-        --paper-slider-knob-color:var(--music-slider-knob-color);
+        --paper-slider-active-color:var(--music-slider-color,blue);
+        --paper-slider-knob-color:var(--music-slider-knob-color,blue);
       }
       paper-slider#volumeControl{
         width: 33%;
-        --paper-slider-active-color:var(--music-slider-color);
-        --paper-slider-knob-color:var(--music-slider-knob-color);
+        --paper-slider-active-color:var(--music-slider-color,blue);
+        --paper-slider-knob-color:var(--music-slider-knob-color,blue);
       }
       #show-ctrl{
         width: 100%;
@@ -94,7 +94,7 @@
   </template>
 
   <script>
-  /**
+    /**
 * `Music-Player` is a web mp3 player. as soon as the user provides a server from wich the component will get the song list and they'll be avaliable for playing.
 * Example:
 * <music-component list-request-url="https://music-server-jansolote.herokuapp.com/tracks" song-url="https://music-server-jansolote.herokuapp.com/track/"></music-component>
@@ -192,9 +192,9 @@
             type: Boolean,
             value: false
           },
-          invisibleControlsButton:{
-            type:Boolean,
-            value:false
+          invisibleControlsButton: {
+            type: Boolean,
+            value: false
           }
         };
       }
