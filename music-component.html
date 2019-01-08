@@ -65,6 +65,9 @@
       <source src="[[trackUrl]]" type="audio/mp3" codecs="mp3">
     </audio>
     <div class="button-container" hidden$="[[invisibleControlsButton]]">
+      <button id="show-ctrl" on-click="showControls">hide controls</button>
+    </div>
+    <div class="button-container" hidden$="[[!invisibleControlsButton]]">
       <button id="show-ctrl" on-click="showControls">show controls</button>
     </div>
     <div class="player-container">
@@ -344,6 +347,8 @@
 
       showControls() {
         this.set("invisibleControls", !this.invisibleControls);
+        this.set("invisibleControlsButton",!this.invisibleControlsButton);
+
       }
 
     }
