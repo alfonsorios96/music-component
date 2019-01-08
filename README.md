@@ -1,6 +1,19 @@
 [![Build Status](https://travis-ci.org/jusolete/music-component.svg?branch=master)](https://travis-ci.org/jusolete/music-component)
 
 # \<music-component\>
+<!--
+```
+<custom-element-demo>
+  <template>
+    <link rel="import" href="music-component.html">
+    <music-component></music-component>
+  </template>
+</custom-element-demo>
+```
+-->
+```html
+<music-component></music-component>
+```
 
 ## Install bower
 npm i bower
