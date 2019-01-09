@@ -2,7 +2,6 @@
   "name": "music-component",
   "version": "1.0.0",
   "description": "mini web music player",
-  "main": "index.js",
   "directories": {
     "test": "test"
   },
@@ -26,8 +25,18 @@
     "url": "https://github.com/jusolete/music-component/issues"
   },
   "homepage": "https://github.com/jusolete/music-component#readme",
+  "main": "music-component.js",
+  "dependencies": {
+    "@polymer/iron-ajax": "^3.0.1",
+    "@polymer/paper-button": "^3.0.0",
+    "@polymer/paper-input": "^3.0.0",
+    "@polymer/paper-slider": "^3.0.0",
+    "@polymer/polymer": "^3.0.0"
+  },
   "devDependencies": {
     "@polymer/iron-component-page": "^4.0.1",
+    "@polymer/iron-demo-helpers": "^3.0.0",
+    "@webcomponents/webcomponentsjs": "^2.0.0",
     "web-component-tester": "git+https://github.com/t2ym/web-component-tester.git#wct6-plugin",
     "web-component-tester-istanbul": "git+https://github.com/t2ym/web-component-tester-istanbul.git#0.10.1-wct6.8"
   }
